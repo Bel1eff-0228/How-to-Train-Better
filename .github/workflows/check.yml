@@ -1,0 +1,20 @@
+name: Check guide
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - run: node tools/build.mjs
+      - run: node --test tests/*.test.mjs
+      - run: python3 -m pip install -r tools/requirements-pdf.txt
+      - run: python3 tools/build_pdf.py
+      - run: python3 tools/package_release.py
+      - run: python3 tools/package_source.py
