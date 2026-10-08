@@ -1,0 +1,46 @@
+name: Publish reading site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - run: node tools/build.mjs
+      - run: node --test tests/*.test.mjs
+      - name: Prepare reader-only website
+        run: |
+          mkdir -p _site
+          cp dist/HowToTrainBetter.html _site/index.html
+          cp dist/HowToTrainBetter.html _site/HowToTrainBetter.html
+          cp LICENSE LICENSE-CODE _site/
+          cp licenses/NOTICE.txt _site/NOTICE.txt
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v4
