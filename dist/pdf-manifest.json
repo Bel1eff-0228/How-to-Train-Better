@@ -1,0 +1,11 @@
+{
+  "version": "0.9.0",
+  "pages": 107,
+  "entries": 94,
+  "sha256": "c12ca1ede067e64166739cd09b92d1ca431135f8c5fb1b14e38a7436a5631e05",
+  "bytes": 811264,
+  "fontSha256": "39ad71264b588165b469e35e6afb162a378dacd1f95348160240ba9038ac3009",
+  "searchable": true,
+  "contentSha256": "23ef5f1ba5a74def106f6e74dac5b1e5eadae827ff47c5a6cfc6cc28a4fb9a8d",
+  "layoutReview": "pending: render and inspect separately"
+}

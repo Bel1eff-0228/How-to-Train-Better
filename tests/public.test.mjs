@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {loadBook,ROOT} from '../tools/build.mjs';
+import api from '../tools/public.cjs';
+import path from 'node:path';
+const book=await loadBook(),entries=book.sections.flatMap(s=>s.entries);
+test('来源索引覆盖正文全部来源且反向引用完整',()=>{const index=api.sources(entries);assert.equal(index.length,73);for(const source of index){assert(source.text.includes('http'));assert.deepEqual(source.entries,entries.filter(e=>e.src.includes(`[${source.id}]`)).map(e=>e.id));}assert(!index.some(s=>s.id==='S15'));});
+test('条目分享保留证据、限制、原始来源和署名许可',()=>{for(const e of entries){const text=api.citation(e,'v0.9.0');for(const v of [e.id,e.title,e.human,e.why,e.evidence,e.note,e.src,e.verified,api.attribution,'CC BY-NC 4.0','节选'])assert(text.includes(v));}});
+test('反馈模板注明版本条目，不要求身份或病史',()=>{const text=api.feedback(entries[0],'v0.9.0');assert(text.includes('v0.9.0'));assert(text.includes('TB-01-01'));assert(!/姓名|手机号|病史/.test(text));});
+test('读者入口没有评测结果或后端提交功能',async()=>{const html=await readFile(path.join(ROOT,'dist/HowToTrainBetter.html'),'utf8');assert(!/id="quality|__QUALITY__|quality-status|<form/.test(html));const embedded=JSON.parse(html.match(/window\.__CORPUS__=(.*?);<\/script>/s)[1]);assert.deepEqual(Object.keys(embedded).sort(),['licenses','parts','readme']);});

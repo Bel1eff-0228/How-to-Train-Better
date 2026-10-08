@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 310" role="img" aria-labelledby="title desc">
+<title id="title">从修改一条到发布新版</title><desc id="desc">修改book正文，运行检查，检查阅读和PDF，确认公开文件，上传干净源码，云端通过后创建Release。出现问题退回修改。</desc>
+<rect width="900" height="310" rx="20" fill="#f5f7fb"/>
+<g font-family="Microsoft YaHei, sans-serif" fill="#172b45" text-anchor="middle">
+<text x="450" y="36" font-size="23">每次更新，走完这六步</text>
+<g fill="white" stroke="#b7c8dc"><rect x="20" y="62" width="270" height="80" rx="12"/><rect x="315" y="62" width="270" height="80" rx="12"/><rect x="610" y="62" width="270" height="80" rx="12"/><rect x="20" y="190" width="270" height="80" rx="12"/><rect x="315" y="190" width="270" height="80" rx="12"/><rect x="610" y="190" width="270" height="80" rx="12"/></g>
+<g font-size="20"><text x="155" y="92">① 修改正文</text><text x="450" y="92">② 生成与检查</text><text x="745" y="92">③ 实际打开阅读</text><text x="155" y="220">④ 确认公开内容</text><text x="450" y="220">⑤ 上传干净源码</text><text x="745" y="220">⑥ 发布 Release</text></g>
+<g font-size="15" fill="#48627c"><text x="155" y="122">保留编号，补齐来源与限制</text><text x="450" y="122">运行 tools/release.ps1</text><text x="745" y="122">手机、离线、问答、PDF</text><text x="155" y="250">个人介绍、许可、隐私</text><text x="450" y="250">只取 source 包，检查 Actions</text><text x="745" y="250">附读者包、PDF、技能与校验值</text></g>
+<g fill="#4267b2" font-size="24"><text x="302" y="109">→</text><text x="597" y="109">→</text><text x="302" y="237">→</text><text x="597" y="237">→</text></g>
+<text x="450" y="170" font-size="16">前三步通过后进入下一行；检查失败先回到①修正</text>
+<text x="450" y="297" font-size="14">保留旧版本；不要把缓存、学员资料或原始答卷上传</text>
+</g></svg>

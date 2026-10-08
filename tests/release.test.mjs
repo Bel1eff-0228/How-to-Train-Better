@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import path from 'node:path';
+import {loadBook,ROOT} from '../tools/build.mjs';
+import reading from '../tools/reading.cjs';
+import {digest} from '../tools/evaluation.mjs';
+const read=p=>readFile(path.join(ROOT,p),'utf8');
+const book=await loadBook(),entries=book.sections.flatMap(s=>s.entries);
+const ids=[11,10,11,10,10,21,13,8].flatMap((count,c)=>Array.from({length:count},(_,n)=>`TB-0${c+1}-${String(n+1).padStart(2,'0')}`));
+const oldIds=[11,10,10,10,10,20,13,8].flatMap((count,c)=>Array.from({length:count},(_,n)=>`TB-0${c+1}-${String(n+1).padStart(2,'0')}`));
+test('v0.9 原92编号保留，新增2编号不重不漏',()=>{assert.deepEqual(entries.map(e=>e.id).sort(),ids);assert(oldIds.every(id=>ids.includes(id)));assert.equal(ids.filter(id=>!oldIds.includes(id)).length,2);});
+test('旧92条收藏和已读可导入，新增2条默认未读',()=>{const restored=reading.decode({...reading.empty(),saved:oldIds,read:oldIds,lastId:'TB-05-06'},ids);assert.deepEqual(restored.saved,oldIds);assert.deepEqual(restored.read,oldIds);assert.equal(restored.lastId,'TB-05-06');assert.equal(ids.filter(id=>!restored.read.includes(id)).length,2);assert.equal(reading.routes.length,6);assert(reading.routes.every(r=>r.ids.length===4));});
+test('Q97–Q102覆盖全部新增条目，S15保持空号',async()=>{const suite=JSON.parse(await read('evaluation/cases.json'));assert.equal(suite.cases.length,102);const added=suite.cases.filter(c=>Number(c.id.slice(1))>=97);assert.equal(added.length,6);assert(ids.filter(id=>!oldIds.includes(id)).every(id=>added.some(c=>c.entries.includes(id))));assert(entries.every(e=>!e.src.includes('[S15]')));});
+test('离线授权范围与两份完整协议同源，上游版权和NC边界保留',async()=>{const html=await read('dist/HowToTrainBetter.html'),embedded=JSON.parse(html.match(/window\.__CORPUS__=(.*?);<\/script>/s)[1]);assert.deepEqual(embedded.licenses,{notice:await read('licenses/NOTICE.txt'),content:await read('LICENSE'),code:await read('LICENSE-CODE')});assert(embedded.licenses.content.startsWith('Attribution-NonCommercial 4.0 International'));assert(embedded.licenses.content.includes('Section 8'));assert(embedded.licenses.code.includes('eternity4719'));assert(embedded.licenses.code.includes('THE SOFTWARE IS PROVIDED'));assert(embedded.licenses.notice.includes('分享和改编'));assert(embedded.licenses.notice.includes('上游权利'));assert(!/oncontextmenu|oncopy/.test(html));});
+test('v0.3 历史许可留存，官方NC下载原文校验值固定',async()=>{const manifest=JSON.parse(await read('licenses/provenance.json'));assert.equal(digest(await read('LICENSE')),manifest.sha256);const old=await read('licenses/history/CC-BY-4.0-v0.3.txt');assert(old.startsWith('Attribution 4.0 International'));assert(!old.startsWith('Attribution-NonCommercial'));});
+test('过期报告不会被当成本版通过数量',async()=>{const quality=JSON.parse(await read('dist/quality.json'));assert.equal(quality.total,102);if(quality.status!=='current')assert.equal(quality.passed,undefined);});

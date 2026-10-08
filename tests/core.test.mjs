@@ -1,0 +1,26 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile,stat,mkdir,copyFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import core from '../tools/core.cjs';
+import reading from '../tools/reading.cjs';
+import {loadBook,ROOT} from '../tools/build.mjs';
+
+const book=await loadBook(), entries=book.sections.flatMap(s=>s.entries);
+test('目录、正文和稳定编号完整一致',()=>{assert.equal(book.sections.length,8);assert.equal(entries.length,94);assert.equal(new Set(entries.map(e=>e.id)).size,94);assert.deepEqual(core.validate(book.sections),[]);});
+test('v0.9 八章逐章条数符合发布目标',()=>{assert.deepEqual(book.sections.map(s=>s.entries.length),[11,10,11,10,10,21,13,8]);});
+test('同义问法可搜索，空格关键词为 AND',()=>{assert(entries.filter(e=>core.matches(e,{q:'一周两次'})).some(e=>e.id==='TB-01-01'));assert(entries.filter(e=>core.matches(e,{q:'蛋白粉 必须'})).some(e=>e.id==='TB-03-06'));assert.equal(entries.filter(e=>core.matches(e,{q:'蛋白粉 不存在的宇宙飞船'})).length,0);});
+test('同组为 OR，跨组为 AND',()=>{const chosen=entries.filter(e=>core.matches(e,{sec:new Set(['3']),grade:new Set(['A','B']),money:new Set(['0'])}));assert(chosen.length>0);assert(chosen.every(e=>e.sec==='3'&&['A','B'].includes(e.grade)&&e.money==='0'));});
+test('争议筛选和待定分类可用',()=>{assert(entries.filter(e=>core.matches(e,{dispute:true})).some(e=>e.id==='TB-05-01'));assert.equal(entries.find(e=>e.id==='TB-05-06').ratio,'待定');});
+test('没有结果是合法查询状态',()=>{assert.equal(entries.filter(e=>core.matches(e,{q:'量子发动机修复'})).length,0);});
+test('损坏编号、字段、引用和标签被校验拒绝',()=>{for(const mutate of [e=>e.id='TB-99-99',e=>delete e.src,e=>e.money='免费',e=>e.note+=' 第 99 章第 1 条',e=>e.value='一般｜错误']){const s=structuredClone(book.sections);mutate(s[0].entries[0]);assert(core.validate(s).length>0);}});
+test('离线版完全内联，正文与实时源一致',async()=>{const html=await readFile(path.join(ROOT,'dist/HowToTrainBetter.html'),'utf8');assert(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|googletagmanager|google-analytics|fonts\.googleapis/.test(html));const match=html.match(/window\.__CORPUS__=(.*?);<\/script>/s);assert(match);const corpus=JSON.parse(match[1]);assert.deepEqual(corpus.parts,book.parts);assert.equal(corpus.readme,book.readme);});
+test('统计确实由正文导出',async()=>{const stats=JSON.parse(await readFile(path.join(ROOT,'dist/stats.json'),'utf8'));assert.equal(stats.entries,entries.length);for(const g of ['A','B','C'])assert.equal(stats.grades[g],entries.filter(e=>e.grade===g).length);});
+test('所有来源编号都能找到核验记录',async()=>{const log=await readFile(path.join(ROOT,'docs/核验记录.md'),'utf8');for(const e of entries)for(const m of e.src.matchAll(/\[(S\d+)\]/g))assert(log.includes('## '+m[1]+' '),`${e.id}: ${m[1]} 无记录`);});
+test('说明中的本地文件链接存在',async()=>{for(const f of ['README.md','skills/train-better-guide/README.md']){const text=await readFile(path.join(ROOT,f),'utf8');for(const m of text.matchAll(/\]\(([^)]+)\)/g)){if(/^(https?:|#)/.test(m[1]))continue;assert((await stat(path.resolve(ROOT,path.dirname(f),m[1]))).isFile(),m[1]);}}});
+test('隔离副本修改正文后，构建正确更新离线内容',async()=>{const dest=path.join(ROOT,'.cache','roundtrip');const files=['README.md','package.json','index.html','LICENSE','LICENSE-CODE','licenses/NOTICE.txt','assets/styles.css','assets/app.js','assets/reading.js','assets/reader-tools.js','assets/profile.cjs','tools/public.cjs','tools/core.cjs','tools/reading.cjs','tools/build.mjs','tools/quality.mjs','tools/evaluation.mjs','evaluation/cases.json','skills/train-better-guide/SKILL.md',...Object.keys(book.parts)];for(const f of files){await mkdir(path.dirname(path.join(dest,f)),{recursive:true});await copyFile(path.join(ROOT,f),path.join(dest,f));}const f=Object.keys(book.parts)[0];await writeFile(path.join(dest,f),book.parts[f].replace('先安排能坚持的训练频率','回归验证用标题'));const run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:dest,encoding:'utf8',windowsHide:true});assert.equal(run.status,0,run.stderr);const html=await readFile(path.join(dest,'dist/HowToTrainBetter.html'),'utf8');assert(html.includes('回归验证用标题'));assert(!book.parts[f].includes('回归验证用标题'));});
+test('导读与误区的编号引用有效，正文缺失会拒绝构建',()=>{assert.deepEqual(reading.validate(entries),[]);assert(reading.validate(entries.slice(1)).length>0);});
+test('阅读备份拒绝无关文件、未知版本和非法类型',()=>{for(const raw of ['{}','<html>',JSON.stringify({...reading.empty(),version:2}),JSON.stringify({...reading.empty(),saved:[3]})])assert.throws(()=>reading.decode(raw,entries.map(e=>e.id)));});
+test('备份清理未知编号和重复编号，保留稳定编号',()=>{const decoded=reading.decode({...reading.empty(),saved:['TB-01-01','TB-01-01','TB-99-99'],read:['TB-01-02'],lastId:'TB-99-99'},entries.map(e=>e.id));assert.deepEqual(decoded.saved,['TB-01-01']);assert.deepEqual(decoded.read,['TB-01-02']);assert.equal(decoded.lastId,'');});
+test('导入合并不会覆盖原有收藏或阅读进度',()=>{const a={...reading.empty(),saved:['TB-01-01'],read:['TB-01-02'],lastId:'TB-01-02'},b={...reading.empty(),saved:['TB-03-06'],read:['TB-01-02','TB-02-01']};const merged=reading.merge(a,b);assert.deepEqual(merged.saved,['TB-01-01','TB-03-06']);assert.deepEqual(merged.read,['TB-01-02','TB-02-01']);assert.equal(merged.lastId,'TB-01-02');});

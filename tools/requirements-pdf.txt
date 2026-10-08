@@ -1,0 +1,5 @@
+# Document generation only. The HTML reader has no Python or network dependency.
+reportlab==4.4.9
+pypdf==6.10.0
+# Optional local layout inspection:
+pdfplumber==0.11.9

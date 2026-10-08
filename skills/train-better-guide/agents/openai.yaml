@@ -1,0 +1,6 @@
+interface:
+  display_name: "高性价比健身指南"
+  short_description: "先查指南回答入门、补剂与进阶健身问题，解释原理、适用条件和证据"
+  default_prompt: "使用 $train-better-guide，查指南解释：新手一定要喝蛋白粉吗？"
+policy:
+  allow_implicit_invocation: true

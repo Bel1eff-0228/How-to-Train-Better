@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="给健身新手的循证指南：训练、饮食、恢复与避坑。按成本、目标和证据检索，每条有原理、条件与出处。">
+<meta name="author" content="栗子豪">
+<meta name="theme-color" content="#3451b2">
+<title>高性价比健身指南 · How to Train Better</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233451b2'/%3E%3Cpath d='M16 24v16m8-23v30m16-30v30m8-23v16M24 32h16' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<script>try{if((localStorage.getItem('htb-theme')||'')==='dark')document.documentElement.classList.add('dark')}catch{}</script>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-build="live">
+<a class="skip" href="#main" style="position:absolute;left:-10000px" onfocus="this.style.left='12px'" onblur="this.style.left='-10000px'">跳到正文</a>
+<header class="nav"><div class="nav-inner">
+  <a class="brand" href="#top"><span class="logo" aria-hidden="true">练</span>健身指南</a>
+  <div class="search"><input id="q" type="search" aria-label="搜索健身问题" placeholder="搜索问题：蛋白粉、酸痛、空腹有氧…" autocomplete="off"></div>
+  <div class="nav-r"><button id="theme" class="nav-action" aria-label="切换深浅主题" aria-pressed="false">深色</button><button id="menu" class="menu-btn" aria-controls="sidebar" aria-expanded="false">筛选</button></div>
+</div></header>
+<div class="backdrop" id="backdrop"></div>
+<aside class="sidebar" id="sidebar" aria-label="章节与筛选">
+  <div class="group"><div class="gt">章节</div><div class="sec-links" id="chapters"></div></div>
+  <div id="filters"></div>
+  <div class="group"><label class="toggle"><input id="dispute" type="checkbox">只看有争议的条目</label><button class="reset" id="reset">清空筛选</button></div>
+  <div class="hint"><p>同一组多选是“或”，不同组是“且”。</p><p>不同目标不合并排名。性价比是编辑判断，证据等级是另一回事。</p><p>从自己的问题开始，挑一两条就好。</p></div>
+</aside>
+<main class="content" id="main"><div class="doc" id="top">
+  <div class="doc-head">
+    <div class="eyebrow">HOW TO TRAIN BETTER / v0.9.0</div>
+    <h1>高性价比健身指南</h1><p class="author-mark">栗子豪 · v0.9.0</p>
+    <p class="lede">把训练、饮食和恢复想明白。每一条都告诉你：<br>怎么做，如何调整，为什么。</p>
+    <div class="summary-bar" id="stats"><span>正在读取指南</span></div>
+    <p class="small">不用全做，也不必从装备开始。按你现在的问题查阅，先挑一两条用得上的。面向普通成年健身者，含入门、补剂与进阶专题；具体疾病、伤病和特殊人群需要个别判断。</p>
+    <div class="doc-links" id="entry-links"><a href="dist/HowToTrainBetter.html" id="offline-link" download>下载离线版</a> · <a href="skills/train-better-guide/README.md" id="skill-link">让 AI 照指南回答</a></div>
+    <div class="print-watermark" aria-hidden="true">栗子豪 · 高性价比健身指南</div><p class="print-license">栗子豪 · 高性价比健身指南（How to Train Better）· 原创正文 CC BY-NC 4.0 · 非商业分享请保留署名与许可，修改请标明。https://creativecommons.org/licenses/by-nc/4.0/</p>
+  </div>
+  <div class="audience-entries"><a href="#e-1-11">刚开始训练：从全身示例入门 →</a><a href="#e-7-13">已有基础，想继续进步：看安排与调整 →</a></div>
+  <details class="guide-note" id="author"><summary>认识栗子豪 · 我的教学方法</summary><div id="author-body"></div></details>
+  <section class="reading-hub" aria-labelledby="reading-title" id="reading-hub" hidden>
+    <div class="hub-heading"><div><div class="eyebrow">从知道，到用得上</div><h2 id="reading-title">这次，先解决一个问题</h2></div><a class="hub-jump" id="jump-results" href="#toolbar">查阅正文 ↓</a></div>
+    <div class="reading-tabs" role="group" aria-label="阅读工具">
+      <button data-panel="routes" aria-pressed="true" aria-controls="routes-panel">场景导读</button>
+      <button data-panel="myths" aria-pressed="false" aria-controls="myths-panel">避坑清单</button>
+      <button data-panel="library" aria-pressed="false" aria-controls="library-panel">我的阅读</button>
+      <button data-panel="supplements" aria-pressed="false" aria-controls="supplements-panel">补剂对照</button>
+      <button data-panel="advanced" aria-pressed="false" aria-controls="advanced-panel">进阶目录</button>
+      <button data-panel="catalog" aria-pressed="false" aria-controls="catalog-panel">全部问题</button>
+    </div>
+    <div id="routes-panel"><p class="hub-intro">选一个眼下的处境，读一小组相关条目。这里安排的是阅读顺序。</p><div id="route-options" class="route-options"></div>
+      <div id="route-detail" class="route-detail" hidden><h3 id="route-title"></h3><p>建议按下面顺序读；完整正文已筛选在下方。读完一条后，可手动标记“已读”。</p><ol id="route-steps"></ol><button id="route-next" class="reading-primary"></button><p id="route-complete" hidden>这一组已经读完，随时可以回来查阅。</p></div>
+    </div>
+    <div id="myths-panel" hidden><p class="hub-intro">24项避坑清单：别这样做 → 可以这样做。展开看正文中的方法、例子和适用条件。</p><div id="myth-list" class="myth-list"></div></div>
+    <div id="library-panel" hidden>
+      <p class="hub-intro">把值得回看的留下。已读由你手动标记，阅读进度只表示读过多少条。</p>
+      <div class="reading-summary"><strong id="reading-count"></strong><progress id="reading-progress" aria-label="已读条目进度" value="0" max="1"></progress></div>
+      <div id="reading-views" class="chips" role="group" aria-label="按阅读状态查看"></div>
+      <div class="backup-actions"><button class="reading-action" id="reading-export">导出阅读备份</button><button class="reading-action" id="reading-import">导入并合并备份</button><input type="file" id="reading-file" accept=".json,application/json" hidden></div>
+      <p class="storage-note">记录保存在当前浏览器；换设备、移动离线文件或清除浏览器数据后，可能需要导入备份。备份只包含条目编号、收藏、已读和上次阅读位置，不上传到服务器。</p>
+      <p id="reading-message" role="status" aria-live="polite"></p>
+    </div>
+    <div id="supplements-panel" hidden><p class="hub-intro"><strong>推荐度不是证据等级，A也不是必买。</strong>推荐A：目标匹配时较优先考虑；B：特定条件或证据有限；C：一般不优先购买。这是本项目编辑判断，不是AIS分组。先确认用途和限制，再决定是否花钱。</p><div class="chips" role="group" aria-label="补剂推荐度"><button class="chip" data-supplement-grade="" aria-pressed="true">全部</button><button class="chip" data-supplement-grade="A" aria-pressed="false">推荐 A</button><button class="chip" data-supplement-grade="B" aria-pressed="false">推荐 B</button><button class="chip" data-supplement-grade="C" aria-pressed="false">推荐 C</button></div><p class="small">性价比按各条目标分别判断，不是售价排名；疾病、用药或缺乏治疗需要专业评估。点名称查看完整依据。</p><div id="supplement-list"></div><section id="comparison-area"><h3>怎么选 · 选购比较</h3><div id="comparison-list"></div></section></div>
+    <div id="advanced-panel" hidden><p class="hub-intro">适合约一年及以上规律训练经验的成年人，按下面顺序理解变量。训练年限不代表动作熟练或适合加量；含四日通用示例，不根据个人病史制定训练处方。</p><ol id="advanced-list"></ol></div>
+    <div id="catalog-panel" hidden><p class="hub-intro">按问题查阅完整条目，也可以用顶部搜索框找关键词。</p><div id="catalog-list"></div></div>
+    <button id="resume" class="resume" hidden></button><p id="reading-notice" class="storage-note" role="status" hidden></p>
+  </section>
+  <details class="guide-note" id="about"><summary>怎么看证据、成本和性价比？</summary><p>A：依据质量较好且总体一致；B：有支持但存在重要限制；C：主要是实践建议或推断。这是项目编辑分级，不是正式医学评级，不能只看字母不看备注。</p><p>性价比“极高／高／一般／待定”针对各条注明的成年目标人群，理由在每条正文中。不同目标不合并排序。“不花钱”指通常不需新增购买；实际食物、器材和就医成本另看条件。</p><p>钱、时间与坚持难度是相对标签，不是测量结果。心肺健康标签也包含心血管健康方向。来源中的 S 编号可跳转到本页参考资料，外部文献需联网。来源核验日期不代表穷尽性检索或专业医学审查。</p><p id="version-note"></p></details>
+  <div id="route-active" class="active-reading" hidden><span id="route-label"></span><button id="route-exit">退出导读</button></div>
+  <div class="toolbar" id="toolbar"><div class="stat" role="status" aria-live="polite">当前显示 <b id="cnt">—</b> 条 / 共 <span id="tot">—</span> 条 <span id="view-label" class="badge tip" hidden></span></div><label>排序 <select id="sort" aria-label="条目排序"><option value="chapter">章节顺序</option><option value="value" disabled>同一目标内按性价比</option></select></label></div>
+  <div id="status" class="status" role="status">正在读取正文…</div>
+  <div class="reader-options"><button id="print-guide" class="reading-action">打印当前条目</button><span>可先搜索或筛选，再打印需要的内容。</span></div>
+  <div id="results"></div>
+  <div id="empty" class="empty-state" hidden><h2>没有符合条件的条目</h2><p>试试减少关键词，或清除部分筛选条件。</p><button class="reset" id="reset-empty">清空筛选</button></div>
+  <details class="guide-note" id="sources"><summary>参考资料与条目对应</summary><p>外部文献链接需要联网。来源支持的结论、适用人群与限制，请结合对应条目阅读。</p><div id="source-list"></div></details>
+  <details class="guide-note" id="privacy"><summary>阅读记录与隐私</summary><p>页面不要求注册，不包含广告、访问统计或健康问卷。收藏、已读、上次阅读位置与主题保存在当前浏览器；阅读备份由你主动导出，页面不会上传这些记录。</p><p>“复制条目”和“反馈这条”只在本机准备文字，由你决定是否复制及向谁分享。访问外部文献时会离开本页面；网站上线后的服务器访问记录取决于实际托管服务。</p></details>
+  <details class="guide-note" id="licensing"><summary>分享与改编许可 · 正文 CC BY-NC 4.0／代码 MIT</summary>
+    <p>署名：栗子豪；作品名：高性价比健身指南（How to Train Better）。原创正文与技能文档允许署名的非商业分享和改编，商业使用另获许可。请附许可链接并标明修改。代码继续按 MIT 提供，第三方材料按原许可处理。</p>
+    <p><a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans" target="_blank" rel="noopener noreferrer">CC BY-NC 4.0 官方中文摘要（需联网）</a>。下方完整声明可离线查看。</p>
+    <p id="license-status" role="status">正在读取完整许可…</p><pre id="license-notice" class="license-text"></pre>
+    <details><summary>完整 MIT 声明与版权信息</summary><pre id="license-code" class="license-text" lang="en"></pre></details>
+    <details><summary>完整 CC BY-NC 4.0 英文法律文本</summary><pre id="license-content" class="license-text" lang="en"></pre></details>
+  </details>
+  <footer class="foot">栗子豪 · 结构与阅读界面改编自 <a href="https://github.com/eternity4719/HowToLiveBetter" target="_blank" rel="noopener noreferrer">高性价比人生指南</a>（eternity4719）。健身内容及判定标准已重新编写；不代表原作者背书。原创正文与技能文档 CC BY-NC 4.0，代码 MIT，第三方材料按原许可。<a href="#licensing">查看分享与改编许可</a>。离线版可阅读与检索，外部来源需要联网。</footer>
+</div></main>
+<dialog id="reader-dialog" aria-labelledby="reader-dialog-title"><h2 id="reader-dialog-title"></h2><p id="reader-dialog-hint"></p><label for="reader-copy-text">可复制的文字</label><textarea id="reader-copy-text" rows="12"></textarea><div class="dialog-actions"><button id="reader-copy" class="reading-action">复制文字</button><button id="reader-dialog-close" class="reading-action">关闭</button></div><p id="reader-copy-status" role="status"></p></dialog>
+<noscript><p>本页正文显示与检索需要 JavaScript，请使用允许 JavaScript 的浏览器打开。若已取得完整项目，也可打开 README.md 和 book 文件夹直接阅读。</p></noscript>
+<!-- CORPUS -->
+<script src="tools/core.cjs"></script>
+<script src="tools/reading.cjs"></script>
+<script src="tools/public.cjs"></script>
+<script src="assets/reading.js"></script>
+<script src="assets/profile.cjs"></script>
+<script src="assets/reader-tools.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

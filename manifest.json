@@ -1,0 +1,416 @@
+{
+  "version": "0.9.0",
+  "kind": "source",
+  "files": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug.md",
+      "bytes": 260,
+      "sha256": "4daea5db1cbdab0e9cfffa3fc527d6fba720aa96df9f6c6fd8b31dcda4601d3f"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/content.md",
+      "bytes": 380,
+      "sha256": "99185f6a1c6c16ef0ec52bb7c63f6a3a6923b5aa2b0d94a55ef34e818bc3172c"
+    },
+    {
+      "path": ".github/workflows/check.yml",
+      "bytes": 582,
+      "sha256": "49b5374ae934da79301a2560d4d4b11313bfe848efb811dea3b9b6b4627c1888"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 285,
+      "sha256": "cf34acd55a6480fb646dc11821887ec8c2e85a0c0da018240b08bbcca3bdf841"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 833,
+      "sha256": "e630df15c967fb1273424722f8ebf04258b3823b18a452266f8d9c7878a1d0cc"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 6117,
+      "sha256": "59c1767db9dcadeb765bca69c7ac1b4a4ad3b9649c0c777da31ea1310b9dc1e5"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "bytes": 1157,
+      "sha256": "e4629ef934bfd7b19cb417bd76443d682972e447008fb6f2cb4ae7a56ad5f02c"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 19347,
+      "sha256": "41003d4a74749c0220e33dd415042164b5a1093ed401f36277234f772d22d3d0"
+    },
+    {
+      "path": "LICENSE-CODE",
+      "bytes": 1151,
+      "sha256": "22a3b14d0fb41b8e99b99956f7f7fc2869e34dfea36f0321a3f670b29f1ef671"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11893,
+      "sha256": "71b20402e0f2fe2880b627b228fd6696750154a8fe61e6bd06e9511e672ed996"
+    },
+    {
+      "path": "assets/app.js",
+      "bytes": 13645,
+      "sha256": "10ea96e7bfee090b8c778d9e85e3560ac353da182f1bdb7a014d4581594e455c"
+    },
+    {
+      "path": "assets/fonts/LXGWWenKai-Regular.ttf",
+      "bytes": 25575676,
+      "sha256": "39ad71264b588165b469e35e6afb162a378dacd1f95348160240ba9038ac3009"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "bytes": 5171,
+      "sha256": "1a25e35da1031c6c3436fde545bb9cb5aca954e9873afe510c834b8b79bd21a0"
+    },
+    {
+      "path": "assets/fonts/README.md",
+      "bytes": 719,
+      "sha256": "42eede7bdf728be416754a9a6840cf6d47f89d1fcecca5f04a4e20130d601765"
+    },
+    {
+      "path": "assets/maintenance-flow.svg",
+      "bytes": 2033,
+      "sha256": "27d4ad5b1acf7fd827e586aefd009a0fdf8b255160bd9ad928137a4a4c24d6db"
+    },
+    {
+      "path": "assets/profile.cjs",
+      "bytes": 1342,
+      "sha256": "72e0e89675811e2509dd2aa3f1e0c7dd2ae5e12317b208a9ed68aebd43b547fe"
+    },
+    {
+      "path": "assets/reader-tools.js",
+      "bytes": 5567,
+      "sha256": "25ec88cb6d30359f8bf81b21de65858339147eef533ae33b0a1bd5cfd88d3247"
+    },
+    {
+      "path": "assets/reading.js",
+      "bytes": 8741,
+      "sha256": "0a19e094eab7d464f745483d2966d1e6ef77a5f22eba60f8d7bae69bde1f991e"
+    },
+    {
+      "path": "assets/styles.css",
+      "bytes": 32509,
+      "sha256": "195cbd50119390744f274acecd294ec7f924422c3e6aec0d422efa5b13a12ef3"
+    },
+    {
+      "path": "book/01-先把力量练起来.md",
+      "bytes": 20739,
+      "sha256": "76ccdc1e21fbd96a4a6d6525403c267d2fa62ee6ecc2ce2c30d75b8155f6f69e"
+    },
+    {
+      "path": "book/02-把有氧做明白.md",
+      "bytes": 16660,
+      "sha256": "1ccbb7c2ed3f410fb85ebbccedc8854f95eb95c6019f3a32718a396cb8509f3e"
+    },
+    {
+      "path": "book/03-吃够需要的少走弯路.md",
+      "bytes": 20014,
+      "sha256": "a77e04d9024a585ee5641278553fe09f7fde42f245959f92962bb2fa8fc8a008"
+    },
+    {
+      "path": "book/04-恢复好才能接着练.md",
+      "bytes": 17076,
+      "sha256": "ed9187e89974a66991bbdfb1b2355921028ca2abcf04bcdb1adc02bc25cca148"
+    },
+    {
+      "path": "book/05-别把钱和精力花错地方.md",
+      "bytes": 17607,
+      "sha256": "2fefc4e76cfd7d838d15c7f3a152eb6bdfa25568fd07980fbe566d5d70e57e90"
+    },
+    {
+      "path": "book/06-补剂先看用途再谈值不值得.md",
+      "bytes": 43049,
+      "sha256": "08f40fd677b292563202ad30d331da05b09faad3f6dc8059597ce2b31ddd5272"
+    },
+    {
+      "path": "book/07-练过一年后把训练变量想清楚.md",
+      "bytes": 23780,
+      "sha256": "2bbec0a6ac83b8df90aff6e05ebc33d4f938239d8df076eae02704de420e03bb"
+    },
+    {
+      "path": "book/08-练着不舒服先这样处理.md",
+      "bytes": 18711,
+      "sha256": "c64ca79df255683ac8ae6d610dc0e405c880deaa08731f97629561d4c8b6f892"
+    },
+    {
+      "path": "dist/HowToTrainBetter.html",
+      "bytes": 300786,
+      "sha256": "b9a923105929a99eae2c3c2c830657863ce4ab954bc212d198fbdfeb988b217d"
+    },
+    {
+      "path": "dist/HowToTrainBetter.pdf",
+      "bytes": 811264,
+      "sha256": "c12ca1ede067e64166739cd09b92d1ca431135f8c5fb1b14e38a7436a5631e05"
+    },
+    {
+      "path": "dist/pdf-manifest.json",
+      "bytes": 421,
+      "sha256": "9fdf9c17797484ad226c324184f7fd70e623dc67fefabde53adb36c5df12df40"
+    },
+    {
+      "path": "dist/stats.json",
+      "bytes": 160,
+      "sha256": "ca5e408276f2c0db28e924ad336d1469e25e4ef737e48f5a20c886aae6c76db1"
+    },
+    {
+      "path": "docs/PDF构建说明.md",
+      "bytes": 2105,
+      "sha256": "4166eca089e93e23d400860d858e88a182bcad89cd62b1266a6fb02f7f0ed978"
+    },
+    {
+      "path": "docs/v0.2使用说明.md",
+      "bytes": 3957,
+      "sha256": "8e67c6e6d87be624f9794b28b13b241bcc4d484e035f7403967a6ec5e80541e3"
+    },
+    {
+      "path": "docs/v0.8发布检查.md",
+      "bytes": 2028,
+      "sha256": "44fab474f360dc60fc0deed552dadb5ab018b3784f7541450259faae851e3c3d"
+    },
+    {
+      "path": "docs/v0.9发布检查.md",
+      "bytes": 2700,
+      "sha256": "7cf3cfa17eca5c93ba92439853e4a2ed65e2f2bf6f0344c9b3e6bd6181c24f97"
+    },
+    {
+      "path": "docs/公开发布准备.md",
+      "bytes": 3750,
+      "sha256": "b1cf6f3e1639f6e79c249ceffad004510064e9a93be32b277c3f460f81176012"
+    },
+    {
+      "path": "docs/创作与授权记录.md",
+      "bytes": 4810,
+      "sha256": "457e75599e979a7b5888f4b8ec506f0967d90146206f8669b4cdb2cb39328daa"
+    },
+    {
+      "path": "docs/引用对照.md",
+      "bytes": 11609,
+      "sha256": "90bd6a4f97838f187ea8ce62f3a973d46463b8cbde91117b5dfb4686f3f43a7a"
+    },
+    {
+      "path": "docs/月度维护.md",
+      "bytes": 1232,
+      "sha256": "6670f2cd353917b0533d0e71ff55780e879a248837c1313821064133f23797e1"
+    },
+    {
+      "path": "docs/来源说明.md",
+      "bytes": 2555,
+      "sha256": "187cf5e0628a16f6b42634e38eb95386d8d24e60bf23a62653feed0b5cebbe08"
+    },
+    {
+      "path": "docs/核验记录.md",
+      "bytes": 36082,
+      "sha256": "c389eeef94333e99c71e293b47164be4c41fd2aae2b577b885563d4a6f182e04"
+    },
+    {
+      "path": "docs/案例整理模板.md",
+      "bytes": 1080,
+      "sha256": "8c524ee99c55d53cbbfe4cd86b7df07c5725dcbcd190da1853d2d1357574caea"
+    },
+    {
+      "path": "docs/版本管理.md",
+      "bytes": 3398,
+      "sha256": "bbb627558c20db1c5376ddf8dfe10ad56b66e0f055c2ab856c8ddc0b4620a655"
+    },
+    {
+      "path": "docs/首次发布指南.md",
+      "bytes": 3148,
+      "sha256": "68043d4f1ee984c34c90d8a7edb7337389d0a623613d5ae5b6f78dfce7d12289"
+    },
+    {
+      "path": "evaluation/README.md",
+      "bytes": 6330,
+      "sha256": "a1f5caf27650d273c3fffa3c920482d79198ce276915bc7818cad32d9cb83a2a"
+    },
+    {
+      "path": "evaluation/cases.json",
+      "bytes": 52505,
+      "sha256": "6e6e9ebc65906fbfbfd4798c64a33a7ed17ff58aa45a83c6794910a21fdf2573"
+    },
+    {
+      "path": "index.html",
+      "bytes": 13751,
+      "sha256": "ca54e6665fba83cd849059f8f57a231549dac412c5a317c7f44b8cc06cb4c89e"
+    },
+    {
+      "path": "licenses/NOTICE.txt",
+      "bytes": 2181,
+      "sha256": "3c2ed12e7d796c29e565866c50c01c580d866857ce7d5796b27a410fd0a56a61"
+    },
+    {
+      "path": "licenses/README.md",
+      "bytes": 3469,
+      "sha256": "db1ff55d7866e21e261375409f3a8ed3a8792ef515df3f05d4b84d2e19aaecc1"
+    },
+    {
+      "path": "licenses/history/CC-BY-4.0-v0.3.txt",
+      "bytes": 18657,
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+    },
+    {
+      "path": "licenses/provenance.json",
+      "bytes": 251,
+      "sha256": "42cb790bfe6249c1e0fcd3733517df1e76ac984196591b285ef507fe74608398"
+    },
+    {
+      "path": "package.json",
+      "bytes": 442,
+      "sha256": "6170d2b43c309c6f86df443c82b01dbadde5c717371a56166c7433c737620b90"
+    },
+    {
+      "path": "skills/train-better-guide/README.md",
+      "bytes": 2625,
+      "sha256": "270cdd6e3f70e61b01d65e27531808cca222b1e009e40e10dddb0456a5bbe030"
+    },
+    {
+      "path": "skills/train-better-guide/SKILL.md",
+      "bytes": 6770,
+      "sha256": "a3bbeae20ed099e74fb72778d49c2ee35215101df1a653a67166e8db7866b499"
+    },
+    {
+      "path": "skills/train-better-guide/agents/openai.yaml",
+      "bytes": 320,
+      "sha256": "f58fc4603bca4a6ef01ae38487018736e108a258eadcb50bd11dd92cc4539cf1"
+    },
+    {
+      "path": "tests/core.test.mjs",
+      "bytes": 5766,
+      "sha256": "f7a6ade45d87358193f26377400f25548c46e4191e296bf026750bbff0b532de"
+    },
+    {
+      "path": "tests/evaluation.test.mjs",
+      "bytes": 4603,
+      "sha256": "2dab775b2d03197e59be2e11a472e4e290113375f7c8ebd86d8db0e6db276847"
+    },
+    {
+      "path": "tests/practical.test.mjs",
+      "bytes": 1348,
+      "sha256": "0962eca1beb61240de9de22824aa4f56327e04e3419cf56d32af9f0851f3a013"
+    },
+    {
+      "path": "tests/public.test.mjs",
+      "bytes": 1547,
+      "sha256": "acc3794165d66c71c068610e8f4fc4a93dbad9e6ec55f3ea61a8469afa439637"
+    },
+    {
+      "path": "tests/release.test.mjs",
+      "bytes": 3176,
+      "sha256": "75b780a4c9278e6d1b1ae3f2aa44c467f02a32aafac695b991206ced848cb806"
+    },
+    {
+      "path": "tests/topics.test.mjs",
+      "bytes": 2191,
+      "sha256": "0b89d1846185953f3132eb4a1921c07b936e8807b9fad8947d87b4c99e5ba42e"
+    },
+    {
+      "path": "tools/audit.mjs",
+      "bytes": 3240,
+      "sha256": "f5aebeef1047308f713d6143db2a38c2cc0bfb532cbce7b1dd9d7dae86f787a4"
+    },
+    {
+      "path": "tools/build.mjs",
+      "bytes": 4243,
+      "sha256": "445319619ade2c270281b0e139770e9c603d43590e0ac761eb7b60a57b4d61d6"
+    },
+    {
+      "path": "tools/build_pdf.py",
+      "bytes": 13726,
+      "sha256": "bb6c2d1504505d3efda87b6cf6a45c12ccc41032bc89e5d41b121cbba7f7105d"
+    },
+    {
+      "path": "tools/core.cjs",
+      "bytes": 4954,
+      "sha256": "44f5873bc51883be5154effb3460d91b888042a6241aeafaec31d17e060e044b"
+    },
+    {
+      "path": "tools/evaluate.mjs",
+      "bytes": 3353,
+      "sha256": "95a983290bd21e8808d76f7c53d0b4be8cc8ec4eb50ee2130a63169ba596a91a"
+    },
+    {
+      "path": "tools/evaluation.mjs",
+      "bytes": 4913,
+      "sha256": "ada89effd937f315806dc4de30d2de23e2e1f26c5d0049111e79b3ca269381fc"
+    },
+    {
+      "path": "tools/export_book.mjs",
+      "bytes": 583,
+      "sha256": "638aba0f0196e08943b7716da4965f94ae7db2d6c06b918428a60dfa8c104533"
+    },
+    {
+      "path": "tools/package_release.py",
+      "bytes": 6477,
+      "sha256": "9cacf4083acbe9dae2e5fb6c0aa75a2d04526f6e8f77c314b3e1fc50abdfb012"
+    },
+    {
+      "path": "tools/package_source.py",
+      "bytes": 6061,
+      "sha256": "358cbe0392d9be21896cf8afe9c9409ca7638c63ec7b7e8e0dd77504e02ceeba"
+    },
+    {
+      "path": "tools/public.cjs",
+      "bytes": 1925,
+      "sha256": "724f6bac7b273c355718624e1cc6c284aa9380859cd544d6097cf6fea3058b11"
+    },
+    {
+      "path": "tools/qa-browser.mjs",
+      "bytes": 26474,
+      "sha256": "b819333ec58aa46cfcc995d89f70fb4ba1bd7f5ebf4ce52d636699ea733767d5"
+    },
+    {
+      "path": "tools/qa-pdf-edge.mjs",
+      "bytes": 1544,
+      "sha256": "0e0fb086703c6058c71c3be347850159cacc415c97a93e2610aa126306157753"
+    },
+    {
+      "path": "tools/qa-public.mjs",
+      "bytes": 4086,
+      "sha256": "404b93453e92b510e46c5191e2b7c297e5006b27a8fb7f74101a9dd67509e23e"
+    },
+    {
+      "path": "tools/qa_clean.py",
+      "bytes": 3026,
+      "sha256": "2673d83dd5404d992503a708813dc4b4b7c4fb40a4f1a655fec953962e7b5709"
+    },
+    {
+      "path": "tools/qa_pdf.py",
+      "bytes": 2934,
+      "sha256": "5d0f3bad9a7f3e4845ad2aeb1922345ade96f3c3e0a33f0952b0741250bc640d"
+    },
+    {
+      "path": "tools/quality.mjs",
+      "bytes": 1329,
+      "sha256": "f1bdd08265ae2b21d60b4000dbb403c90df7a86f255f12420657d6737bbb11ee"
+    },
+    {
+      "path": "tools/reading.cjs",
+      "bytes": 2975,
+      "sha256": "5af288629cedc9244eaf0957eba56e95586e4678f4941ebb76bea323cce40eda"
+    },
+    {
+      "path": "tools/release.ps1",
+      "bytes": 825,
+      "sha256": "3dd74ec309a9fe03d9341a5f1e86ed2ce0a4d2daf5194bfa4c037e34cdaa4f1d"
+    },
+    {
+      "path": "tools/requirements-pdf.txt",
+      "bytes": 167,
+      "sha256": "5ae69854b900ec47bdd9761312f025fd32484c82b3413586826c7eaf6c38c1c7"
+    },
+    {
+      "path": "tools/serve.mjs",
+      "bytes": 1219,
+      "sha256": "a7acfe5a66ea4047122c0039c616a4ea9d820e541d4521d5f523ad1da2d85b47"
+    },
+    {
+      "path": "tools/snapshot.mjs",
+      "bytes": 4081,
+      "sha256": "422d43efdb52e09de92369f789599fcebc13cfe86da58b9377d4196eb9fd3f3e"
+    }
+  ]
+}
