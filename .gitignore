@@ -1,0 +1,18 @@
+.cache/
+node_modules/
+*.log
+evaluation/private/
+.env
+.env.*
+
+# Generated packages and private maintenance artifacts
+dist/*
+!dist/HowToTrainBetter.html
+!dist/stats.json
+evaluation/runs/
+evaluation/history/
+evaluation/reports/
+evaluation/prompts/
+docs/qa/
+__pycache__/
+*.pyc
