@@ -10,7 +10,9 @@
 **8 章 · 94 条 · 73 个来源 · A 5 / B 71 / C 18**
 <!-- STATS:END -->
 
-**直接开始：[打开离线检索版](dist/HowToTrainBetter.html) · [配套 AI 技能](skills/train-better-guide/README.md) · [来源与核验记录](docs/核验记录.md)**
+**直接开始：[在线阅读与检索](https://bel1eff-0228.github.io/How-to-Train-Better/) · [下载离线版与 PDF](https://github.com/Bel1eff-0228/How-to-Train-Better/releases/latest) · [配套 AI 技能](skills/train-better-guide/README.md) · [来源与核验记录](docs/核验记录.md)**
+
+在线版用浏览器直接阅读；离线版请从发布页下载 readers 压缩包，解压后双击 `HowToTrainBetter.html`。两种入口的收藏与阅读进度分别保存在当前浏览器，可通过阅读备份导出、导入迁移。
 
 本版面向普通成年健身者，保留新手入口并提供进阶专题，解释通用知识与选择原则，不生成个人训练计划，不诊断或提供康复处方。涉及具体疾病、伤病或特殊人群时，先确认这些一般结论是否适用。
 
