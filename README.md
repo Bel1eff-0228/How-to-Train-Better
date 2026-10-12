@@ -93,9 +93,6 @@ Windows 完整打包使用 `tools/release.ps1`，依赖见 [PDF构建说明](doc
 完整的 [材料与许可对照](licenses/README.md)、[改编来源](docs/来源说明.md) 及 [创作与授权记录](docs/创作与授权记录.md) 均随项目提供；离线文件内也有许可范围与完整 CC／MIT 声明。v0.3 的完整快照和原许可已保留，不改写历史或声称撤销既有许可。记录有助于保存依据，不等于版权登记或防盗保证。
 
 
-<details>
-<summary>关注栗子豪 · 自愿支持维护</summary>
-
 ## 关注作者
 
 我是栗子豪，抖音昵称为 **🌰荔枝豪**，抖音号 **715476895**。欢迎关注我的训练分享、教学思考与指南更新。
@@ -113,5 +110,3 @@ Windows 完整打包使用 `tools/release.ps1`，依赖见 [PDF构建说明](doc
 <img src="assets/author/wechat-appreciation.jpg" alt="作者提供的微信赞赏码，页面昵称为藤原とうふ店's Reward Code" width="300">
 
 赞赏页显示的昵称为「藤原とうふ店」，对应作者提供的这张赞赏码。感谢你的阅读、反馈与支持。
-
-</details>
