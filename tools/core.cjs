@@ -10,6 +10,8 @@
   const allowed = { lens:['增肌','力量','减脂','心肺健康','运动表现','省钱省时','恢复'], grade:['A','B','C'], ratio:['极高','高','一般','待定'], money:['0','少','多'], time:['少','中','多'], will:['否','些','是'] };
   const fields = { '常见问法':'questions','成本':'cost','说人话':'human','原理':'why','收益':'gain','证据等级':'evidence','性价比':'value','来源':'src','备注':'note','核验日期':'verified' };
   const optionalFields={'条目类型':'kind','补剂名称':'supplement','推荐度':'recommendation','适用人群':'population','怎么做':'how','举例':'example','何时调整':'adjust','何时求助':'help','可能诱因':'triggers','暂时不要':'avoid','避坑':'pitfall'};
+  optionalFields['兼容编号']='legacyIds';
+  function aliases(entries){return Object.fromEntries(entries.flatMap(e=>(e.legacyIds||'').split(/\s+/).filter(Boolean).map(id=>[id,e.id])));}
   function filesFromReadme(md) { return [...new Set([...md.matchAll(/\]\((book\/[^)#]+\.md)\)/g)].map(m=>m[1]))]; }
   function parseChapter(md, file='') {
     const head = /^# (\d+)\. (.+)$/m.exec(md);
@@ -51,6 +53,10 @@
         if(e.kind==='选购比较'&&e.recommendation)errors.push('选购比较不能使用整篇推荐评级：'+e.id);
       }
     }
+    for(const e of sections.flatMap(s=>s.entries))for(const id of (e.legacyIds||'').split(/\s+/).filter(Boolean)){
+      if(!/^TB-\d{2}-\d{2}$/.test(id)||ids.has(id))errors.push('兼容编号无效或重复：'+id);
+      else {ids.add(id);const [,sec,n]=id.split('-');anchors.add(`${Number(sec)}-${Number(n)}`);}
+    }
     for (const s of sections) for (const e of s.entries) for (const m of Object.values(e).filter(v=>typeof v==='string').join('\n').matchAll(/第\s*(\d+)\s*章第\s*(\d+)\s*条/g)) if (!anchors.has(`${m[1]}-${m[2]}`)) errors.push(`${e.id} 无效交叉引用 ${m[0]}`);
     return errors;
   }
@@ -60,5 +66,5 @@
     for (const d of dims) { const vals=Array.from(state[d]||[]); if(vals.length && !vals.includes(e[d])) return false; }
     return !state.dispute || e.dispute;
   }
-  return { dims, allowed, fields, filesFromReadme, parseChapter, validate, matches };
+  return { dims, allowed, fields, aliases, filesFromReadme, parseChapter, validate, matches };
 });

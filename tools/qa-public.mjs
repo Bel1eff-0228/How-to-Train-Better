@@ -22,12 +22,12 @@ try{
   browser=await pw.chromium.launch({channel:'msedge',headless:true});const ctx=await browser.newContext(),page=await ctx.newPage();
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
   const base='http://127.0.0.1:'+server.address().port;
-  await page.goto(base);await page.waitForSelector('body[data-ready="true"]');assert.equal(await page.locator('article').count(),94);
-  assert(!requests.some(u=>/evaluation|quality|\.md|\/assets\/|\/tools\//.test(u)));assert(requests.every(u=>u.startsWith(base)));assert.equal(await page.locator('#quality').count(),0);note('独立网站目录94条可读，仅加载公开包内文件');
+  await page.goto(base);await page.waitForSelector('body[data-ready="true"]');assert.equal(await page.locator('article').count(),100);
+  assert(!requests.some(u=>/evaluation|quality|\.md|\/assets\/|\/tools\//.test(u)));assert(requests.every(u=>u.startsWith(base)));assert.equal(await page.locator('#quality').count(),0);note('独立网站目录100条可读，仅加载公开包内文件');
   const downloadPromise=page.waitForEvent('download');await page.getByRole('link',{name:'下载离线版',exact:true}).click();const download=await downloadPromise;assert.equal(digest(await readFile(await download.path())),digest(await readFile(path.join(folder,'HowToTrainBetter.html'))));note('网站下载得到完全一致的离线文件');
   const missing=await page.request.get(base+'/evaluation/cases.json');assert.equal(missing.status(),404);note('独立目录不暴露内部题库');
   const offline=await browser.newContext({offline:true,viewport:{width:390,height:844}}),p=await offline.newPage(),remote=[];
   p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(/^https?:/.test(r.url()))remote.push(r.url());});
   await p.goto(pathToFileURL(path.join(folder,'HowToTrainBetter.html')).href);await p.waitForSelector('body[data-ready="true"]');await p.locator('#q').fill('膳食纤维');assert(Number(await p.locator('#cnt').textContent())>0);await p.locator('#licensing > summary').click();assert(await p.locator('#license-notice').isVisible());assert.equal(remote.length,0);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));note('读者包离线手机阅读、搜索和许可均可用');
-  assert.deepEqual(errors,[]);await writeFile(path.join(ROOT,'docs/qa/public-results.json'),JSON.stringify({date:'2026-10-03',release,results,errors},null,2)+'\n');
+  assert.deepEqual(errors,[]);await writeFile(path.join(ROOT,'docs/qa/public-results.json'),JSON.stringify({date:'2026-10-11',release,results,errors},null,2)+'\n');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

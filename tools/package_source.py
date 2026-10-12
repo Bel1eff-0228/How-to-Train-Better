@@ -6,6 +6,7 @@ import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
+EXTRA_PUBLIC_DOCS = ['阅读说明.md', 'v0.10更新说明.md', 'v1.0更新说明.md', 'v1.0-GitHub更新步骤.md']
 ROOT_FILES = ['AGENTS.md', 'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', '.gitignore', 'package.json', 'index.html', 'LICENSE', 'LICENSE-CODE']
 PUBLIC_DOCS = ['来源说明.md', '核验记录.md', '引用对照.md', '版本管理.md', '公开发布准备.md', 'v0.2使用说明.md', '创作与授权记录.md', 'v0.8发布检查.md', 'v0.9发布检查.md', 'PDF构建说明.md', '首次发布指南.md', '案例整理模板.md', '月度维护.md']
 
@@ -34,7 +35,7 @@ def export(kind, files, version):
         if out.exists() and out.read_bytes() != data:
             raise ValueError('Refusing to change immutable export: ' + name)
         out.write_bytes(data)
-    archive = ROOT / 'dist' / f'HowToTrainBetter-v{version}-{kind}-{fingerprint}.zip'
+    archive = ROOT / 'dist' / f'HowToTrainBetter-v{version}-{kind}.zip'
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as z:
         for name, data in sorted(files.items()):
             info = zipfile.ZipInfo(name, (2026, 10, 2, 0, 0, 0))
@@ -52,7 +53,7 @@ def build():
     version = json.loads(read_safe('package.json'))['version']
     if not re.fullmatch(r'\d+\.\d+\.\d+', version):
         raise ValueError('Invalid version')
-    paths = ROOT_FILES + ['docs/' + p for p in PUBLIC_DOCS] + ['evaluation/cases.json', 'evaluation/README.md', 'dist/HowToTrainBetter.html', 'dist/stats.json', 'dist/HowToTrainBetter.pdf', 'dist/pdf-manifest.json']
+    paths = ROOT_FILES + ['docs/' + p for p in PUBLIC_DOCS + EXTRA_PUBLIC_DOCS] + ['evaluation/cases.json', 'evaluation/README.md', 'dist/HowToTrainBetter.html', 'dist/stats.json', 'dist/HowToTrainBetter.pdf', 'dist/pdf-manifest.json']
     for directory in ['assets', 'book', 'skills', 'tools', 'tests', 'licenses', '.github']:
         for p in sorted((ROOT / directory).rglob('*')):
             if p.is_symlink():

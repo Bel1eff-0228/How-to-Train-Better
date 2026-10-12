@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const core=window.TrainGuide,$=id=>document.getElementById(id);
-  const labels={lens:'想改善什么',grade:'证据等级',ratio:'性价比 · 编辑判断',money:'花钱',time:'花时间',will:'坚持难度'};
+  const labels={lens:'想改善什么',grade:'证据等级',ratio:'性价比',money:'花钱',time:'花时间',will:'坚持难度'};
   const names={money:{'0':'不花钱','少':'少','多':'多'},time:{'少':'少','中':'中','多':'多'},will:{'否':'低','些':'中','是':'高'}};
   const state={q:'',dispute:false,sort:'chapter',route:'',view:'all',...Object.fromEntries(core.dims.map(d=>[d,new Set()]))};
   let sections=[],entries=[],nodes=new Map(),blocks=[],reading,readerTools;
@@ -66,7 +66,7 @@
     reading?.sync();if(write)url();
     if(activeCard){if(activeCard.offsetHeight)active.focus({preventScroll:true});else{$('toolbar').tabIndex=-1;$('toolbar').focus({preventScroll:true});}}
   }
-  function go(hash,push=true){const node=document.getElementById(hash.slice(1));if(!node)return;for(let p=node;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;const e=entries.find(e=>nodes.get(e.id)===node);if((e&&!matches(e))||!node.offsetHeight)reset();menu(false);if(push){try{history.pushState(null,'',hash)}catch{location.hash=hash}}node.scrollIntoView({block:'start'});node.tabIndex=-1;node.focus({preventScroll:true});if(e)reading?.setLast(e.id);}
+  function go(hash,push=true){const old=/^#e-(\d+)-(\d+)$/.exec(hash);if(old){const id=`TB-${old[1].padStart(2,"0")}-${old[2].padStart(2,"0")}`,target=core.aliases(entries)[id];if(target){const [,s,n]=target.split("-");hash=`#e-${Number(s)}-${Number(n)}`;}}const node=document.getElementById(hash.slice(1));if(!node)return;for(let p=node;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;const e=entries.find(e=>nodes.get(e.id)===node);if((e&&!matches(e))||!node.offsetHeight)reset();menu(false);if(push){try{history.pushState(null,'',hash)}catch{location.hash=hash}}node.scrollIntoView({block:'start'});node.tabIndex=-1;node.focus({preventScroll:true});if(e)reading?.setLast(e.id);}
   $('q').addEventListener('input',()=>{state.q=$('q').value;update();});$('dispute').onchange=()=>{state.dispute=$('dispute').checked;update()};$('sort').onchange=()=>{state.sort=$('sort').value;update()};$('reset').onclick=reset;$('reset-empty').onclick=reset;
   addEventListener('popstate',()=>{readState();update(false);if(location.hash)go(location.hash,false)});addEventListener('hashchange',()=>{if(location.hash)go(location.hash,false)});
   async function read(p){const r=await fetch(p,{cache:'no-store'});if(!r.ok)throw new Error(`${p} (${r.status})`);return r.text();}

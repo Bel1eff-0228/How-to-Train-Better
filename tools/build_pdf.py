@@ -62,11 +62,64 @@ class GuideDoc(BaseDocTemplate):
             self.canv.addOutlineEntry(flowable.getPlainText(), key, level=level, closed=False)
             self.notify('TOCEntry', (level, flowable.getPlainText(), self.page, key))
 
+def draw_cover(canvas):
+    """Searchable, typographic cover; keep body pagination unchanged."""
+    navy = colors.HexColor('#142c43')
+    teal = colors.HexColor('#178781')
+    canvas.setStrokeColor(teal)
+    canvas.setLineWidth(4)
+    canvas.line(48, H-53, W-48, H-53)
+    canvas.setFillColor(navy)
+    canvas.setFont('Guide', 12)
+    canvas.drawString(48, H-88, 'HOW TO TRAIN BETTER')
+    canvas.drawRightString(W-48, H-88, VERSION)
+    # A lightly stroked embedded font gives the title more weight without raster text.
+    canvas.saveState()
+    canvas.setStrokeColor(navy)
+    canvas.setLineWidth(.55)
+    title = canvas.beginText(44, H-223)
+    title.setFont('Guide', 78)
+    title.setTextRenderMode(2)
+    title.setLeading(100)
+    title.textLine('高性价比')
+    title.textLine('健身指南')
+    canvas.drawText(title)
+    canvas.restoreState()
+    canvas.setFillColor(teal)
+    canvas.setFont('Guide', 20)
+    canvas.drawString(48, H-381, '把训练、饮食和恢复想明白')
+    canvas.setStrokeColor(teal)
+    canvas.setLineWidth(2)
+    canvas.line(48, H-413, 109, H-413)
+    canvas.setFillColor(navy)
+    canvas.setFont('Guide', 14)
+    canvas.drawString(48, H-454, '从一个问题开始。')
+    canvas.drawString(48, H-479, '先看怎么做，再理解为什么。')
+    canvas.setFont('Guide', 19)
+    canvas.drawString(48, 224, '栗子豪')
+    canvas.setFont('Guide', 10)
+    canvas.drawString(48, 200, '发起与维护')
+    canvas.setStrokeColor(colors.HexColor('#d6e0e5'))
+    canvas.setLineWidth(.7)
+    canvas.line(48, 175, W-48, 175)
+    canvas.setFont('Guide', 11)
+    canvas.drawString(48, 150, f"{len(book['sections'])} 章 / {sum(len(s['entries']) for s in book['sections'])} 条 / {len(book['pitfalls'])} 项避坑清单")
+    canvas.setFont('Guide', 10)
+    canvas.drawString(48, 128, '力量 · 有氧 · 饮食 · 恢复 · 消费 · 补剂 · 进阶 · 身体不适')
+    canvas.setFillColor(colors.HexColor('#657681'))
+    canvas.setFont('Guide', 8)
+    canvas.drawString(48, 81, '通用知识与训练示例；不代替诊断或个性化康复。')
+    canvas.drawString(48, 65, '原创正文 CC BY-NC 4.0 · 水印用于标示来源')
+
 def page_frame(canvas, doc):
     canvas.saveState()
     canvas.setTitle('高性价比健身指南 · ' + VERSION)
     canvas.setAuthor('栗子豪')
     canvas.setSubject(f"{len(book['sections'])}章{sum(len(s['entries']) for s in book['sections'])}条；原创正文 CC BY-NC 4.0；通用知识与示例")
+    if doc.page == 1:
+        draw_cover(canvas)
+        canvas.restoreState()
+        return
     canvas.setFont('Guide', 8)
     canvas.setFillColor(colors.HexColor('#667788'))
     canvas.drawString(44, H-27, 'HOW TO TRAIN BETTER  /  看得懂，用得上')
@@ -77,7 +130,7 @@ def page_frame(canvas, doc):
     canvas.translate(W/2, H/2)
     canvas.rotate(32)
     canvas.setFillColor(colors.Color(.38,.46,.54,alpha=.075))
-    canvas.setFont('Guide', 27)
+    canvas.setFont('Guide', 38)
     canvas.drawCentredString(0, 0, '栗子豪 · 高性价比健身指南')
     canvas.restoreState()
 
@@ -112,12 +165,7 @@ def build():
     doc = GuideDoc(str(OUT), pagesize=A4, leftMargin=44, rightMargin=44, topMargin=48, bottomMargin=48,
                    allowSplitting=True, pageCompression=1)
     doc.addPageTemplates(PageTemplate(id='reader', frames=[Frame(44,48,W-88,H-102,id='main',leftPadding=0,rightPadding=0,topPadding=0,bottomPadding=0)], onPage=page_frame, onPageEnd=page_end))
-    story = [Spacer(1,95), Paragraph('高性价比<br/>健身指南',styles['title']),
-             Paragraph('How to Train Better',styles['chapter']),
-             Paragraph('栗子豪 · '+VERSION, styles['body']), Spacer(1,30),
-             Paragraph('从一个问题开始。<br/>先看怎么做，再理解为什么。',styles['chapter']),
-             Paragraph(f"{len(book['sections'])}章 · {sum(len(s['entries']) for s in book['sections'])}条 · {len(book['pitfalls'])}项避坑清单<br/>力量 / 有氧 / 饮食 / 恢复 / 消费 / 补剂 / 进阶 / 身体不适",styles['body']),
-             Spacer(1,25), Paragraph('通用知识与训练示例；不代替诊断或个性化康复。<br/>原创正文 CC BY-NC 4.0 · 水印用于标示来源。',styles['small']),PageBreak()]
+    story = [Spacer(1, 1), PageBreak()]
     story.append(heading('阅读与分享', 'license',0))
     for label,text in [
         ('怎样使用','先选眼前问题，读直接建议、方法与例子，再看调整和求助条件。示例范围是可调整的起点；没有标为研究结果的具体排程，不是来源已证明的人人最优处方。目录、书签和来源链接可点击，PDF文字可搜索复制；外部来源需联网。'),
@@ -147,10 +195,12 @@ def build():
     toc.levelStyles=[ParagraphStyle('toc0',fontName='Guide',fontSize=11,leading=16,textColor=BLUE,spaceBefore=7,wordWrap='CJK'),ParagraphStyle('toc1',fontName='Guide',fontSize=9.5,leading=13,leftIndent=12,firstLineIndent=0,spaceBefore=1,wordWrap='CJK')]
     story.extend([toc,PageBreak()])
     story.append(heading('避坑清单 · 别这样做，可以这样做','pitfalls',0))
+    pitfall_label = ParagraphStyle('pitfall-label', parent=styles['label'], fontSize=9.5, leading=14, spaceBefore=3, spaceAfter=1)
+    pitfall_body = ParagraphStyle('pitfall-body', parent=styles['body'], fontSize=9.5, leading=14, spaceAfter=2)
     for e in book['pitfalls']:
         story.append(KeepTogether([
-            Paragraph(escape('别这样做：'+e['pitfall']),styles['label']),
-            Paragraph(linked('可以这样做：'+e['human']),styles['body']),
+            Paragraph(escape('别这样做：'+e['pitfall']),pitfall_label),
+            Paragraph(linked('可以这样做：'+e['human']),pitfall_body),
             Paragraph(linked('方法与例子见第 '+e['section']+' 章第 '+e['n']+' 条')+' · '+e['id'],styles['small'])]))
     story.append(PageBreak())
     for section in book['sections']:
@@ -162,7 +212,7 @@ def build():
             story.append(Paragraph('直接建议',styles['label']))
             story.append(Paragraph(linked(e['human']),styles['human']))
             for label,key in [('条目类型','kind'),('适用人群','population'),('何时求助','help'),('怎么做','how'),('举个例子','example'),('何时调整','adjust'),('暂时不要','avoid'),('可能诱因','triggers'),('原理','why'),('补剂推荐','recommendation'),('成本','cost'),('收益','gain'),('证据等级','evidence'),('性价比','value'),('备注','note')]:
-                if e['id'] in {'TB-01-11','TB-06-19','TB-06-21','TB-07-13'} and key=='why':
+                if e['id'] in {'TB-01-11','TB-06-19','TB-06-21','TB-07-13','TB-08-09'} and key=='why':
                     story.extend([PageBreak(),Paragraph('原理与依据 · '+e['id'],styles['entry'])])
                 field(story,label,e.get(key,''))
             tail=[]

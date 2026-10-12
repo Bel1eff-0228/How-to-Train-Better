@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="600" viewBox="0 0 1440 600" role="img" aria-labelledby="title desc">
+<title id="title">高性价比健身指南 · 栗子豪</title><desc id="desc">把训练练明白，把钱花在值得的地方。力量、有氧、饮食、恢复、补剂与避坑。</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f3f7ff"/><stop offset="1" stop-color="#e9f7f2"/></linearGradient><linearGradient id="bar"><stop stop-color="#263e78"/><stop offset="1" stop-color="#148779"/></linearGradient><pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 H 0 V 48" fill="none" stroke="#214c73" stroke-opacity=".035"/></pattern></defs>
+<rect width="1440" height="600" fill="url(#bg)"/><rect width="1440" height="600" fill="url(#grid)"/><rect width="1440" height="8" fill="url(#bar)"/>
+<g font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">
+<rect x="80" y="64" width="48" height="48" rx="13" fill="#263e78"/><path d="M91 85v9m6-15v21m7-11h9m0-10v21m6-15v9" stroke="white" stroke-width="3" fill="none"/>
+<text x="146" y="98" font-size="25" fill="#40576c" font-weight="700">高性价比健身指南</text><text x="80" y="151" font-size="18" letter-spacing="4" fill="#60758b">HOW TO TRAIN BETTER</text>
+<text x="78" y="263" font-size="76" font-weight="900" fill="#182c46">把训练练明白，</text><text x="78" y="363" font-size="76" font-weight="900" fill="#167b70">把钱花在值得的地方。</text>
+<text x="82" y="422" font-size="27" fill="#53697c">力量 · 有氧 · 饮食 · 恢复 · 补剂 · 避坑</text>
+<g font-size="22" font-weight="700"><rect x="80" y="473" width="190" height="51" rx="25" fill="#dfe7f7"/><text x="107" y="507" fill="#263e78">先看怎么做</text><rect x="286" y="473" width="215" height="51" rx="25" fill="#d4eee6"/><text x="312" y="507" fill="#176a5f">再理解为什么</text><rect x="517" y="473" width="205" height="51" rx="25" fill="white"/><text x="543" y="507" fill="#40576c">来源可以查</text></g>
+<text x="1346" y="515" text-anchor="end" font-size="23" fill="#40576c">栗子豪 · 发起与维护</text></g></svg>

@@ -50,7 +50,9 @@ https://creativecommons.org/licenses/by-nc/4.0/
 完整范围与协议见NOTICE.txt、LICENSE、LICENSE-CODE，也可在页面内离线查看。
 来源结构与界面改编自eternity4719的HowToLiveBetter，不代表其对健身内容背书。
 
-本包为本地发布候选文件，尚未在公开网站上线。
+本包对应v{version}。项目已有公开阅读站，新版本以发布页实际发布为准。
+在线阅读：https://bel1eff-0228.github.io/How-to-Train-Better/
+版本下载：https://github.com/Bel1eff-0228/How-to-Train-Better/releases
 需要网站时，可将本包文件放在静态托管目录，index.html为首页。
 网站服务器的访问日志规则由实际托管方决定。
 发现疑问可用条目下的“反馈这条”记录并联系向你提供本指南的人。
@@ -82,13 +84,13 @@ https://creativecommons.org/licenses/by-nc/4.0/
         target.write_bytes(data)
     if set(p.name for p in dest.iterdir()) != set(files):
         raise ValueError('Unexpected files in reader release')
-    archive = ROOT / 'dist' / f'HowToTrainBetter-v{version}-readers-{fingerprint}.zip'
-    if not archive.exists():
-        with zipfile.ZipFile(archive, 'x', compression=zipfile.ZIP_DEFLATED) as out:
-            for name, data in sorted(files.items()):
-                item = zipfile.ZipInfo(name, (2026, 10, 2, 0, 0, 0))
-                item.compress_type = zipfile.ZIP_DEFLATED
-                out.writestr(item, data)
+    # Friendly build artifact; exact historical bytes remain in immutable dest.
+    archive = ROOT / 'dist' / f'HowToTrainBetter-v{version}-readers.zip'
+    with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as out:
+        for name, data in sorted(files.items()):
+            item = zipfile.ZipInfo(name, (2026, 10, 2, 0, 0, 0))
+            item.compress_type = zipfile.ZIP_DEFLATED
+            out.writestr(item, data)
     with zipfile.ZipFile(archive) as bundled:
         if sorted(bundled.namelist()) != sorted(files):
             raise ValueError('Unexpected archive files')

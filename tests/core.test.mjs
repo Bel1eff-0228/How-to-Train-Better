@@ -8,8 +8,8 @@ import reading from '../tools/reading.cjs';
 import {loadBook,ROOT} from '../tools/build.mjs';
 
 const book=await loadBook(), entries=book.sections.flatMap(s=>s.entries);
-test('目录、正文和稳定编号完整一致',()=>{assert.equal(book.sections.length,8);assert.equal(entries.length,94);assert.equal(new Set(entries.map(e=>e.id)).size,94);assert.deepEqual(core.validate(book.sections),[]);});
-test('v0.9 八章逐章条数符合发布目标',()=>{assert.deepEqual(book.sections.map(s=>s.entries.length),[11,10,11,10,10,21,13,8]);});
+test('目录、正文和稳定编号完整一致',()=>{assert.equal(book.sections.length,8);assert.equal(entries.length,100);assert.equal(new Set(entries.map(e=>e.id)).size,100);assert.deepEqual(core.validate(book.sections),[]);});
+test('v1.0 八章逐章条数符合发布目标',()=>{assert.deepEqual(book.sections.map(s=>s.entries.length),[15,10,11,10,11,21,13,9]);});
 test('同义问法可搜索，空格关键词为 AND',()=>{assert(entries.filter(e=>core.matches(e,{q:'一周两次'})).some(e=>e.id==='TB-01-01'));assert(entries.filter(e=>core.matches(e,{q:'蛋白粉 必须'})).some(e=>e.id==='TB-03-06'));assert.equal(entries.filter(e=>core.matches(e,{q:'蛋白粉 不存在的宇宙飞船'})).length,0);});
 test('同组为 OR，跨组为 AND',()=>{const chosen=entries.filter(e=>core.matches(e,{sec:new Set(['3']),grade:new Set(['A','B']),money:new Set(['0'])}));assert(chosen.length>0);assert(chosen.every(e=>e.sec==='3'&&['A','B'].includes(e.grade)&&e.money==='0'));});
 test('争议筛选和待定分类可用',()=>{assert(entries.filter(e=>core.matches(e,{dispute:true})).some(e=>e.id==='TB-05-01'));assert.equal(entries.find(e=>e.id==='TB-05-06').ratio,'待定');});

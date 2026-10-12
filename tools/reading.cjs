@@ -13,11 +13,11 @@
   const myths=["TB-04-01","TB-05-02","TB-05-01","TB-05-03","TB-03-06","TB-04-05","TB-01-05","TB-01-06","TB-07-04","TB-07-10","TB-02-05","TB-07-07","TB-05-04","TB-02-08","TB-03-05","TB-03-02","TB-06-01","TB-06-12","TB-06-06","TB-06-17","TB-08-01","TB-08-03","TB-06-16","TB-06-20"];
   const format='how-to-train-better-reading',key='htb-reading-v1';
   function empty(){return {format,version:1,saved:[],read:[],lastId:''};}
-  function decode(raw,ids){
+  function decode(raw,ids,aliases={}){
     const data=typeof raw==='string'?JSON.parse(raw):raw;
     if(!data||data.format!==format||data.version!==1||!Array.isArray(data.saved)||!Array.isArray(data.read)||typeof data.lastId!=='string'||[...data.saved,...data.read].some(x=>typeof x!=='string'))throw Error('文件不是支持的阅读备份（版本 1）');
-    const valid=new Set(ids),keep=list=>[...new Set(list)].filter(id=>valid.has(id));
-    return {...empty(),saved:keep(data.saved),read:keep(data.read),lastId:valid.has(data.lastId)?data.lastId:''};
+    const valid=new Set(ids),resolve=id=>Object.hasOwn(aliases,id)?aliases[id]:id,keep=list=>[...new Set(list.map(resolve))].filter(id=>valid.has(id));
+    return {...empty(),saved:keep(data.saved),read:keep(data.read),lastId:valid.has(resolve(data.lastId))?resolve(data.lastId):''};
   }
   function merge(a,b){return {...empty(),saved:[...new Set([...a.saved,...b.saved])],read:[...new Set([...a.read,...b.read])],lastId:b.lastId||a.lastId};}
   function validate(entries){const ids=new Set(entries.map(e=>e.id)),errors=[],routeIds=new Set();for(const route of routes){if(routeIds.has(route.id))errors.push('重复导读编号：'+route.id);routeIds.add(route.id);if(new Set(route.ids).size!==route.ids.length)errors.push('导读条目重复：'+route.id);for(const id of route.ids)if(!ids.has(id))errors.push('导读引用缺失：'+id);}for(const id of myths)if(!ids.has(id))errors.push('误区引用缺失：'+id);return errors;}

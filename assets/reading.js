@@ -8,7 +8,7 @@ window.mountReading=function({entries,el,textInto,go,selectRoute,selectView,getS
   function warn(text){$('reading-notice').hidden=false;$('reading-notice').textContent=text;}
   try{
     const raw=localStorage.getItem(data.key);
-    if(raw){try{library=data.decode(raw,byId.keys());}catch{warn('原有阅读记录无法读取；本次从空记录开始。你可以导入之前导出的备份。');}}
+    if(raw){try{library=data.decode(raw,byId.keys(),window.TrainGuide.aliases(entries));}catch{warn('原有阅读记录无法读取；本次从空记录开始。你可以导入之前导出的备份。');}}
     localStorage.setItem(data.key+'-probe','1');localStorage.removeItem(data.key+'-probe');
   }catch{canSave=false;warn('浏览器未允许保存记录：本次仍可收藏和标记已读，关闭后可能丢失。请导出阅读备份。');}
   function persist(){try{localStorage.setItem(data.key,JSON.stringify(library));canSave=true;}catch{canSave=false;warn('阅读记录暂时无法保存到浏览器。请在关闭页面前导出阅读备份。');}}
@@ -54,11 +54,11 @@ window.mountReading=function({entries,el,textInto,go,selectRoute,selectView,getS
   $('reading-import').onclick=()=>$('reading-file').click();
   $('reading-file').onchange=async()=>{
     const file=$('reading-file').files[0];if(!file)return;
-    try{if(file.size>1024*1024)throw Error('备份文件过大，请选择小于 1 MB 的阅读备份');const incoming=data.decode(await file.text(),byId.keys());library=data.merge(library,incoming);persist();refresh();sync();announce('已合并备份，保留原有收藏和已读记录。其他版本中不存在于本版的编号会被忽略。'+(canSave?'':'请保留导出的备份。'));}
+    try{if(file.size>1024*1024)throw Error('备份文件过大，请选择小于 1 MB 的阅读备份');const incoming=data.decode(await file.text(),byId.keys(),window.TrainGuide.aliases(entries));library=data.merge(library,incoming);persist();refresh();sync();announce('已合并备份，保留原有收藏和已读记录。已合并条目的旧编号会转到新条目，其余本版不存在的编号会被忽略。'+(canSave?'':'请保留导出的备份。'));}
     catch(error){announce('未导入：'+error.message+'。现有记录未改变。');}
     finally{$('reading-file').value='';}
   };
-  addEventListener('storage',ev=>{if(ev.key!==data.key)return;try{library=ev.newValue?data.decode(ev.newValue,byId.keys()):data.empty();refresh();sync();}catch{warn('另一个窗口的阅读记录格式无法识别；当前记录保持不变。');}});
+  addEventListener('storage',ev=>{if(ev.key!==data.key)return;try{library=ev.newValue?data.decode(ev.newValue,byId.keys(),window.TrainGuide.aliases(entries)):data.empty();refresh();sync();}catch{warn('另一个窗口的阅读记录格式无法识别；当前记录保持不变。');}});
   function sync(){
     for(const e of entries)for(const kind of ['saved','read']){const b=buttons.get(e.id+'-'+kind);if(!b)continue;const active=library[kind].includes(e.id);b.setAttribute('aria-pressed',String(active));b.textContent=kind==='saved'?(active?'★ 已收藏':'☆ 收藏'):(active?'✓ 已读':'标记已读');b.setAttribute('aria-label',b.textContent+'：'+e.title);}
     $('reading-count').textContent=`已读 ${library.read.length} / ${entries.length} 条 · 收藏 ${library.saved.length} 条`;

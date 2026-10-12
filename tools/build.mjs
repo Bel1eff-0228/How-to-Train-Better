@@ -38,7 +38,7 @@ export async function build(){
   await writeFile(path.join(ROOT,'dist/quality.json'),JSON.stringify(quality,null,2)+'\n');
   await mkdir(path.join(ROOT,'docs'),{recursive:true});
   const mapping='# 条目与来源对照\n\n由 tools/build.mjs 根据正文生成；维护请修改 book/。\n\n| 编号 | 条目 | 来源 | 证据 | 性价比 | 核验日期 |\n| --- | --- | --- | --- | --- | --- |\n'+entries.map(e=>`| ${e.id} | 第 ${e.sec} 章第 ${e.n} 条：${e.title} | ${[...e.src.matchAll(/\[S\d+\]/g)].map(m=>m[0]).join('、')} | ${e.grade} | ${e.ratio} | ${e.verified} |`).join('\n')+'\n';
-  await writeFile(path.join(ROOT,'docs/引用对照.md'),mapping);
+  await writeFile(path.join(ROOT,'docs/引用对照.md'),mapping+'\n## 合并编号\n\n'+Object.entries(core.aliases(entries)).map(([old,id])=>`${old} → ${id}`).join('\n')+'\n');
   let readme=corpus.readme.replace(/<!-- STATS:START -->[\s\S]*?<!-- STATS:END -->/,`<!-- STATS:START -->\n**${stats.chapters} 章 · ${stats.entries} 条 · ${stats.sources} 个来源 · A ${stats.grades.A} / B ${stats.grades.B} / C ${stats.grades.C}**\n<!-- STATS:END -->`);
   if(readme!==corpus.readme) { await writeFile(path.join(ROOT,'README.md'),readme); return build(); }
   console.log(`已生成离线版：${stats.chapters} 章 ${stats.entries} 条，${stats.sources} 个来源。`);

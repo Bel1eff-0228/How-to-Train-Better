@@ -11,5 +11,6 @@ Invoke-Checked 'node' (@('--test') + $testFiles)
 Invoke-Checked $PythonExe @('tools/build_pdf.py')
 Invoke-Checked $PythonExe @('tools/package_release.py')
 Invoke-Checked $PythonExe @('tools/package_source.py')
+Invoke-Checked $PythonExe @('tools/checksums.py')
 Invoke-Checked $PythonExe @('tools/qa_clean.py')
 Write-Host '本地候选已生成并验证重建。发布前仍需实际问答、浏览器及PDF人工验收；本工具不上传。'

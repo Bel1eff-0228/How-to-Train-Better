@@ -347,6 +347,7 @@ abbr.term:hover{border-bottom-color:var(--brand-1);color:var(--brand-1)}
 #reading-notice{border-top:1px solid var(--divider);padding-top:12px;color:var(--yellow-1)}
 .resume{display:block;font-size:12px;color:var(--brand-1);padding:13px 0 0;margin-top:15px;border-top:1px solid var(--divider);text-align:left;width:100%}
 #view-label{margin-left:6px}#toolbar{scroll-margin-top:calc(var(--nav-h) + 12px)}
+article[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 @media(max-width:520px){.reading-hub{padding:18px 14px;margin:22px 0 16px}.hub-heading h2{font-size:20px}.hub-heading{flex-wrap:wrap;gap:4px}.reading-tabs{gap:22px;margin-top:12px}.route-options{grid-template-columns:1fr}.route-option{padding:11px 13px}.route-option small{margin-top:2px}.myth-card>summary{padding:12px}.myth-hint{font-size:10px}.route-detail{padding:14px 12px}.reading-action{min-height:40px}.reading-tabs button{min-height:44px}}
 
 /* License texts stay readable in a standalone offline copy. */
