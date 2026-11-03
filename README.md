@@ -110,3 +110,21 @@ Windows 完整打包使用 `tools/release.ps1`，依赖见 [PDF构建说明](doc
 <img src="assets/author/wechat-appreciation.jpg" alt="作者提供的微信赞赏码，页面昵称为藤原とうふ店's Reward Code" width="300">
 
 赞赏页显示的昵称为「藤原とうふ店」，对应作者提供的这张赞赏码。感谢你的阅读、反馈与支持。
+
+
+## TrainBetter AI v2.0 开发候选
+
+新应用位于 `apps/web`，原阅读器和历史发布包保持独立。真实模型生成与修改已完成有限测试，仍出现供应商503，尚未公开部署。Render受控测试配置见 [部署说明](docs/competition/render-deployment.md)。
+
+```sh
+cd apps/web
+npm ci
+# 将 .env.example 复制为 .env.local，仅在本机或部署平台Secret填写密钥
+npm run dev
+```
+
+环境变量：MODEL_BASE_URL、MODEL_NAME、MODEL_API_KEY、PLAN_SIGNING_SECRET；调用上限和部署模式见 [Agent说明](apps/web/AGENT.md)。禁止提交真实密钥。
+
+结构：app提供页面/API，components为界面，lib/agent为检索和工具，generated为book生成的索引，tests为自动化验证。检查：`npm test`、`npm run typecheck`、`npm run build`。
+
+部署必须使用支持服务端API的平台，保留根book/tools构建上下文。详见 [部署步骤](docs/competition/deployment.md)、[参赛材料](docs/competition/submission.md) 和 [验收清单](docs/competition/submission-checklist.md)。

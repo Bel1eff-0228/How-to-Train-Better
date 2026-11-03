@@ -1,0 +1,1 @@
+export default function Logo(){return <svg width="32" height="32" viewBox="0 0 64 64" role="img" aria-label="TrainBetter 哑铃标志"><rect width="64" height="64" rx="16" fill="#256b50"/><path d="M16 24v16m8-23v30m16-30v30m8-23v16M24 32h16" stroke="white" strokeWidth="5" strokeLinecap="round"/></svg>;}

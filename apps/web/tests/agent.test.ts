@@ -1,0 +1,20 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {initialProfile} from '../lib/plan';
+import {create_training_plan,revise_training_plan} from '../lib/agent/agent';
+import {retrieve_fitness_knowledge} from '../lib/agent/knowledge';
+import {validate_training_plan,estimate_budget_options,select_exercises} from '../lib/agent/tools';
+import {callModel,type ModelCall} from '../lib/agent/model';
+import {handle} from '../lib/agent/http';
+const p={...initialProfile,equipment:'哑铃' as const};
+// Injected provider fixture: tests orchestration, not live model competence.
+const fake:ModelCall=async(_system,payload)=>{const x=payload as {request?:string;profile:typeof p;knowledge:{id:string}[]};if(x.request)return {safe:true,patch:{days:2}};return {safe:true,days:Array.from({length:x.profile.days},()=>({exerciseIds:select_exercises(x.profile).map(e=>e.id)})),sourceIds:[x.knowledge[0].id]};};
+test('A: 3天45分钟哑铃完整计划，动作受限、时长可行',async()=>{const plan=await create_training_plan(p,fake);assert.equal(plan.days.length,3);assert(plan.days.every(d=>d.minutes<=45&&d.exercises.length===3));assert(plan.sources.length>0);});
+test('B: 利用原计划调整2天，不改预算器械，保留旧计划',async()=>{const old=await create_training_plan(p,fake);const before=JSON.stringify(old);const next=await revise_training_plan(old,'这周只能练两次',fake);assert.equal(next.days.length,2);assert.equal(next.profile.equipment,'哑铃');assert.equal(next.version,2);assert(next.changes.length>0);assert.equal(JSON.stringify(old),before);});
+test('C: 0预算不强制购买',()=>{assert.deepEqual(estimate_budget_options(p).requiredPurchases,[]);assert.equal(estimate_budget_options(p).extraCost,0);});
+test('D: 疼痛直接拦截，不调用模型、不修改原计划',async()=>{const old=await create_training_plan(p,fake);let calls=0;await assert.rejects(()=>revise_training_plan(old,'深蹲膝盖疼，增加重量',async()=>{calls++;return {};}),/暂停/);assert.equal(calls,0);});
+test('检索保留文件路径、来源、低证据标记',()=>{const found=retrieve_fitness_knowledge({query:'全身 示例',limit:8});assert(found.length);assert(found.every(e=>e.file.startsWith('book/')&&e.src&&e.verified));assert(found.some(e=>e.grade==='C'&&e.flags.length));assert.equal(retrieve_fitness_knowledge({query:'不存在的星际术语'}).length,0);});
+test('拒绝未知动作、无来源、错误天数和模型风险输出',()=>{const good={safe:true,days:Array.from({length:3},()=>({exerciseIds:['db-squat','db-press','db-row']})),sourceIds:['TB-01-11']};for(const draft of [{...good,sourceIds:['BAD']},{...good,safe:false},{...good,days:good.days.slice(0,2)},{...good,days:[{exerciseIds:['unknown','db-row','db-press']},...good.days.slice(1)]}])assert.throws(()=>validate_training_plan({profile:p,draft,sourceIds:['TB-01-11']}));});
+test('故障不降级伪造成功',async()=>{await assert.rejects(()=>create_training_plan(p,async()=>{throw new Error('provider failed');}),/provider failed/);await assert.rejects(()=>create_training_plan(p,async()=>({foo:'bar'})));});
+test('未配置真实供应商明确失败',async()=>{const old=process.env.MODEL_API_KEY;delete process.env.MODEL_API_KEY;try{await assert.rejects(()=>callModel('test',{}),/尚未配置/);}finally{if(old)process.env.MODEL_API_KEY=old;}});
+test('HTTP拒绝跨域和篡改原计划',async()=>{const old=process.env.PLAN_SIGNING_SECRET;process.env.PLAN_SIGNING_SECRET='test-only-signing-secret-not-for-production';try{let r=await handle(new Request('http://localhost/api/plan/create',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json'},body:'{}'}));assert.equal(r.status,403);r=await handle(new Request('http://localhost/api/plan/revise',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:'fake.bad',message:'每周2天'})}),true);assert.equal(r.status,400);}finally{if(old)process.env.PLAN_SIGNING_SECRET=old;else delete process.env.PLAN_SIGNING_SECRET;}});

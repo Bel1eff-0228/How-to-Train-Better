@@ -1,0 +1,10 @@
+import {useState} from 'react';
+import {initialProfile,profileSchema,type Profile} from '@/lib/plan';
+export default function ProfileForm({busy,onSubmit}:{busy:boolean;onSubmit:(p:Profile)=>void}){
+ const [value,setValue]=useState(initialProfile),[error,setError]=useState('');
+ function select<K extends keyof Profile>(key:K,label:string,options:Profile[K][]){return <label className="field">{label}<select value={String(value[key])} onChange={e=>setValue({...value,[key]:typeof options[0]==='number'?Number(e.target.value):e.target.value})}>{options.map(o=><option key={String(o)} value={String(o)}>{o}{key==='days'?' 天':key==='minutes'?' 分钟':''}</option>)}</select></label>;}
+ return <form onSubmit={e=>{e.preventDefault();const result=profileSchema.safeParse(value);if(!result.success){setError(result.error.issues.map(i=>i.message).join('；'));return;}setError('');onSubmit(result.data);}}>
+ <fieldset disabled={busy}><legend className="sr-only">训练条件</legend><div className="form-grid">{select('goal','我希望',['增肌','减脂','提升体能'])}{select('experience','训练经验',['新手','初级','进阶'])}{select('days','每周可训练',[2,3,4,5,6])}{select('minutes','单次可用时间',[30,45,60,75,90])}{select('equipment','可用器械',['健身房','哑铃','徒手'])}<label className="field">每月额外预算（元）<input type="number" required min="0" max="100000" step="1" value={Number.isNaN(value.budget)?'':value.budget} onChange={e=>setValue({...value,budget:e.target.value===''?NaN:Number(e.target.value)})}/></label></div>
+ <label className="field notes">训练限制与补充说明 <span>选填 · 最多500字</span><textarea value={value.notes} maxLength={500} rows={3} placeholder="如有不适或其他限制，请说明。存在疼痛、疾病或伤病时将暂停生成。" onChange={e=>setValue({...value,notes:e.target.value})}/></label><p className="muted text-sm">预算指已有器械之外的额外支出。无需姓名、手机号或登录。</p>
+ {error&&<p role="alert" className="error">{error}</p>}<label className="field"><span><input type="checkbox" required style={{width:18,minHeight:18,marginRight:8}}/>我已满18岁，理解这是一般健身信息，并同意发送条件至模型服务商处理。</span></label><button className="primary wide" type="submit">{busy?'正在生成并检查…':'生成训练计划'}<span aria-hidden="true"> ↗</span></button></fieldset></form>;
+}
