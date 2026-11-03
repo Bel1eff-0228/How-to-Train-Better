@@ -16,3 +16,9 @@ evaluation/prompts/
 docs/qa/
 __pycache__/
 *.pyc
+
+# Local backups contain private configuration: never publish.
+release-backups/
+output/
+tmp/
+docs/competition/*.jsonl
