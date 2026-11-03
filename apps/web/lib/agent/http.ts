@@ -3,12 +3,13 @@ import {z} from 'zod';
 import {profileSchema,type Plan} from '../plan';
 import {create_training_plan,revise_training_plan} from './agent';
 import {AgentError} from './errors';
+import {validateOrigin} from './origin';
 let start=0,count=0,active=0;
 function secret(){const s=process.env.PLAN_SIGNING_SECRET;if(!s||s.length<32)throw new AgentError('NOT_CONFIGURED','服务端计划签名尚未配置。',503);return s;}
 function sign(value:string){return createHmac('sha256',secret()).update(value).digest('hex');}
 export async function handle(request:Request,revise=false){
  try{
-  const origin=request.headers.get('origin');if(origin&&origin!==new URL(request.url).origin)throw new AgentError('ORIGIN','请求来源不允许。',403);
+  validateOrigin(request);
   if(Date.now()-start>60000){start=Date.now();count=0;}if(++count>20||active>=3)throw new AgentError('RATE_LIMIT','请求较多，请稍后重试。',429);
   if(!request.headers.get('content-type')?.includes('application/json'))throw new AgentError('INPUT','需要JSON请求。',400);
   const reader=request.body?.getReader();if(!reader)throw new AgentError('INPUT','请求为空。',400);let size=0;const chunks:Uint8Array[]=[];

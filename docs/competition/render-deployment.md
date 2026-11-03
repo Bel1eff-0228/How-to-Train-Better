@@ -26,6 +26,8 @@
 |---|---|
 |NODE_VERSION|24.21.0|
 |NODE_ENV|production|
+|APP_ORIGIN|https://trainbetter-ai-test.onrender.com|
+|ORIGIN_DIAGNOSTICS|false（排障临时true，仅记录来源关系布尔值）|
 |NEXT_TELEMETRY_DISABLED|1|
 |MODEL_BASE_URL|https://api.deepseek.com|
 |MODEL_NAME|deepseek-flash|
