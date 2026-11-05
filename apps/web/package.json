@@ -13,19 +13,20 @@
     "predev": "node scripts/build-knowledge.mjs"
   },
   "dependencies": {
+    "lucide-react": "1.68.0",
     "next": "^16.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.0",
+    "@playwright/test": "^1.56.0",
+    "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "tailwindcss": "^4.0.0",
-    "@tailwindcss/postcss": "^4.0.0",
     "tsx": "^4.20.0",
-    "@playwright/test": "^1.56.0"
+    "typescript": "^5.9.0"
   }
 }

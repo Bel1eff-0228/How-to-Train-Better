@@ -1,0 +1,6 @@
+import type {Plan} from '@/lib/training/schema';
+import {muscles} from '@/lib/ui/plan-data';
+export default function VolumeOverview({plan}:{plan:Plan}){
+ const max=Math.max(1,...plan.weeklyVolume.map(v=>v.directSets+v.indirectSets));
+ return <details className="volume-overview"><summary>肌群训练量与每日耗时<span className="hint">计划数据</span></summary><div className="details-body"><p className="hint">直接组与间接参与组分别展示，不能相加当作等效刺激。同一复合动作可直接涉及多个肌群，因此各肌群组数之和不等于全周动作正式组数。频率单位为天 / 周。</p><div className="volume-grid">{plan.weeklyVolume.map(v=><div className="volume-row" key={v.muscle}><strong>{muscles[v.muscle]}</strong><p>直接 {v.directSets} 组 · 间接 {v.indirectSets} 组</p><div className="bar" aria-hidden="true"><span style={{width:v.directSets/max*100+'%'}}/><i style={{width:v.indirectSets/max*100+'%'}}/></div><small>直接训练 {v.directFrequency} 天 · 含间接参与 {v.exposureFrequency} 天</small></div>)}</div><h3>每天计划预计耗时</h3><ul className="time-list">{plan.days.map((d,i)=><li key={i}><span>{d.label}</span><meter min={0} max={plan.profile.minutes} value={d.estimatedMinutes} aria-label={d.label+'预计分钟'}/><strong>{d.estimatedMinutes} / {plan.profile.minutes} 分钟</strong></li>)}</ul><p className="hint">时长为编排估算，不包含器械排队等不可预测因素；没有记录实际训练完成情况。</p></div></details>;
+}
